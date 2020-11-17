@@ -30,11 +30,8 @@ export default class WikilinksToMdlinks extends Plugin {
 			return
 		}
 
-
 		const cursor = editor.getCursor()
-
 		const line = editor.getDoc().getLine(cursor.line);
-
 
 		const regexHasExtension = /^([^\\]*)\.(\w+)$/
 
@@ -42,7 +39,6 @@ export default class WikilinksToMdlinks extends Plugin {
 		const regexParenthesis = /\((.*?)\)/
 		const regexWikiGlobal = /\[\[([^\]]+)\]\]/g
 		const regexMdGlobal = /\[(.*?)\]\((.*?)\)/g
-
 
 		let wikiMatches = line.match(regexWikiGlobal)
 		let mdMatches = line.match(regexMdGlobal)
