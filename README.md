@@ -36,5 +36,11 @@ https://github.com/obsidianmd/obsidian-sample-plugin
 https://github.com/obsidianmd/obsidian-api
 
 # Version History
+## 0.0.3
+- Updated certain functions as per Obsidian pull request recommendations
+
+## 0.0.2
+- Changed shortcut to `Ctrl/cmd + shift + =` due to conflict with previous.
+
 ## 0.0.1
 - Initial release. Includes `Toggle selected wikilink to markdown link and vice versa`.

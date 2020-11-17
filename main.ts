@@ -23,15 +23,14 @@ export default class WikilinksToMdlinks extends Plugin {
 	}
 
 	toggleLink() {
-		const currentView = this.app.workspace.activeLeaf.view
+		const currentView = this.app.workspace.getActiveLeafOfViewType(MarkdownView)
+		const editor = currentView.sourceMode.cmEditor
 
-		// Only allow toggling in Editor view
-        if (!(currentView instanceof MarkdownView)) {
-            return
-        }
+		if (!(editor.hasFocus)) {
+			return
+		}
 
-		const activeLeaf: any = this.app.workspace.activeLeaf
-    	const editor = activeLeaf.view.sourceMode.cmEditor
+
 		const cursor = editor.getCursor()
 
 		const line = editor.getDoc().getLine(cursor.line);
