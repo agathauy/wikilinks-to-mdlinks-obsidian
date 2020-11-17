@@ -12,7 +12,7 @@ export default class WikilinksToMdlinks extends Plugin {
 			callback: () => this.toggleLink(),
 			hotkeys: [{
 				modifiers: ["Mod", "Shift"],
-				key: "."
+				key: "="
 			}]
 		});
 
