@@ -91,11 +91,6 @@ export default class WikilinksToMdlinks extends Plugin {
 					let temp = line.slice(i, line.length)
 					let index = i + temp.indexOf(item)
 					let indexEnd = index + item.length
-					console.log(temp)
-					console.log(item)
-					console.log(i)
-					console.log(index)
-					console.log(indexEnd)
 					i = indexEnd
 
 					if ((cursor.ch >= index ) && (cursor.ch <= indexEnd )) {
@@ -105,7 +100,6 @@ export default class WikilinksToMdlinks extends Plugin {
 
 						// Check if it is a markdown file
 						const matches = text.match(regexHasExtension);
-						console.log(matches)
 						if (matches) {
 							const filename = matches[1]
 							const extension = matches[2]
@@ -114,7 +108,6 @@ export default class WikilinksToMdlinks extends Plugin {
 								text = filename
 							}
 						}
-						console.log(`index: ${index}; indexEnd: ${indexEnd}; txt: ${text}`)
 						let newItem = `[[${text}]]`
 
 						const cursorStart = {
