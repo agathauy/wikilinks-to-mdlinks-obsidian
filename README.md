@@ -40,6 +40,9 @@ https://github.com/obsidianmd/obsidian-sample-plugin
 https://github.com/obsidianmd/obsidian-api
 
 # Version History
+## 0.0.4
+- Updated markdown link regex
+
 ## 0.0.3
 - Updated certain functions as per Obsidian pull request recommendations
 
