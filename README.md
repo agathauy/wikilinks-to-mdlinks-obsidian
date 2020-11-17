@@ -1,4 +1,26 @@
-## Obsidian Sample Plugin
+# Wikilinks to MDLinks (an Obsidian.md plugin)
+
+This plugin allows for the conversion of individually selected wikilinks to markdown links, and vice versa.
+
+### How-to
+
+1. Click your cursor somewhere within the link you want to convert.
+2 Either use the hotkey `Ctrl/cmd + shift + .` (this can be changed via Hotkeys settings), or press `Ctrl/cmd + p` to open the settings dialog and search for `Wikilinks to MDLinks: Toggle selected wikilink to markdown link and vice versa`. Just typing in a bit of the command, e.g. "toggle" would likely allow this command to show up via the suggestions the search dialog provides.
+3. The selected link gets toggled to either wikilink format or markdown format, depending on what it was before.
+
+### Features
+- [X] Toggle selected wikilink to markdown link and vice versa
+- [ ] Convert all wikilinks in selected text to markdown
+- [ ] Convert all markdown links in selected text to wikilinks
+
+## Installation
+### From within Obsidian
+1. Install via the `Third Party plugins` setting. Search for `Wikilinks to MDLinks`.
+2. Activate the plugin in the settings.
+
+### From Github Release
+1. Download the [Latest release](https://github.com/agathauy/wikilinks-to-mdlinks-obsidian/releases/latest)
+2. Copy the extracted plugin folder to your vault `<vault>/.obsidian/plugins/`.
 
 This is a sample plugin for Obsidian (https://obsidian.md).
 
@@ -30,16 +52,14 @@ This sample plugin demonstrates some of the basic functionality the plugin API c
 - Make sure you have a `README.md` file in the root of your repo.
 - Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
 
-### How to use
+### How to run this repo
 
 - Clone this repo.
 - `npm i` or `yarn` to install dependencies
 - `npm run dev` to start compilation in watch mode.
 
-### Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
 ### API Documentation
+Based on the following links:
 
-See https://github.com/obsidianmd/obsidian-api
+https://github.com/obsidianmd/obsidian-sample-plugin
+https://github.com/obsidianmd/obsidian-api

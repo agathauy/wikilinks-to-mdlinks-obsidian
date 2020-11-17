@@ -1,83 +1,134 @@
+import { strict } from 'assert';
 import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { MarkdownView, TFile } from 'obsidian'
 
-export default class MyPlugin extends Plugin {
+export default class WikilinksToMdlinks extends Plugin {
 	onload() {
-		console.log('loading plugin');
-
-		this.addRibbonIcon('dice', 'Sample Plugin', () => {
-			new Notice('This is a notice!');
-		});
-
-		this.addStatusBarItem().setText('Status Bar Text');
+		console.log('loading wikilinks-to-mdlinks plugin...');
 
 		this.addCommand({
-			id: 'open-sample-modal',
-			name: 'Open Sample Modal',
-			// callback: () => {
-			// 	console.log('Simple Callback');
-			// },
-			checkCallback: (checking: boolean) => {
-				let leaf = this.app.workspace.activeLeaf;
-				if (leaf) {
-					if (!checking) {
-						new SampleModal(this.app).open();
-					}
-					return true;
-				}
-				return false;
-			}
+			id: "toggle-wiki-md-links",
+			name: "Toggle selected wikilink to markdown link and vice versa",
+			callback: () => this.toggleLink(),
+			hotkeys: [{
+				modifiers: ["Mod", "Shift"],
+				key: "."
+			}]
 		});
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
-
-		this.registerEvent(this.app.on('codemirror', (cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
-		}));
-
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
-
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 
 	onunload() {
-		console.log('unloading plugin');
-	}
-}
-
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
+		console.log('unloading wikilinks-to-md plugin');
 	}
 
-	onOpen() {
-		let {contentEl} = this;
-		contentEl.setText('Woah!');
-	}
+	toggleLink() {
+		const currentView = this.app.workspace.activeLeaf.view
 
-	onClose() {
-		let {contentEl} = this;
-		contentEl.empty();
-	}
-}
+		// Only allow toggling in Editor view
+        if (!(currentView instanceof MarkdownView)) {
+            return
+        }
 
-class SampleSettingTab extends PluginSettingTab {
-	display(): void {
-		let {containerEl} = this;
+		const activeLeaf: any = this.app.workspace.activeLeaf
+    	const editor = activeLeaf.view.sourceMode.cmEditor
+		const cursor = editor.getCursor()
 
-		containerEl.empty();
+		const line = editor.getDoc().getLine(cursor.line);
 
-		containerEl.createEl('h2', {text: 'Settings for my awesome plugin.'});
 
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text.setPlaceholder('Enter your secret')
-				.setValue('')
-				.onChange((value) => {
-					console.log('Secret: ' + value);
-				}));
+		const regexHasExtension = /^([^\\]*)\.(\w+)$/
 
+		const regexWiki = /\[\[([^\]]+)\]\]/
+		const regexParenthesis = /\((.*?)\)/
+		const regexWikiGlobal = /\[\[([^\]]+)\]\]/g
+		const regexMdGlobal = /\[(.*?)\]\((.*?)\)/g
+
+
+		let wikiMatches = line.match(regexWikiGlobal)
+		let mdMatches = line.match(regexMdGlobal)
+
+		let ifFoundMatch = false
+
+		// If there are wikiMatches find if the cursor is inside the selected text
+		let i = 0
+		if (wikiMatches) {
+			for (const item of wikiMatches) {
+
+				let temp = line.slice(i, line.length)
+
+				let index = i + temp.indexOf(item)
+				let indexEnd = index + item.length
+
+				i = indexEnd
+				if ((cursor.ch >= index ) && (cursor.ch <= indexEnd )) {
+					ifFoundMatch = true
+					let text = item.match(regexWiki)[1]
+					// Check if it is a markdown file
+					const matches = text.match(regexHasExtension);
+					if (matches) {
+						const filename = matches[1];
+						const extension = matches[2];
+					} else {
+						text = text + ".md"
+					}
+					text = encodeURI(text)
+					let newItem = `[](${text})`
+
+					const cursorStart = {
+						line: cursor.line,
+						ch: index
+					}
+					const cursorEnd = {
+						line: cursor.line,
+						ch: indexEnd
+					}
+
+					editor.replaceRange(newItem, cursorStart, cursorEnd);
+				}
+			}
+		}
+
+		i = 0
+		if (ifFoundMatch == false) {
+			if (mdMatches) {
+				for (const item of mdMatches) {
+
+					let temp = line.slice(i, line.length)
+					let index = i + temp.indexOf(item)
+					let indexEnd = index + item.length
+
+					i = indexEnd
+
+					if ((cursor.ch >= index ) && (cursor.ch <= indexEnd )) {
+						ifFoundMatch = true
+						let text = item.match(regexParenthesis)[1]
+						text = decodeURI(text)
+
+						// Check if it is a markdown file
+						const matches = text.match(regexHasExtension);
+						if (matches) {
+							const filename = matches[1];
+							const extension = matches[2];
+
+							if (extension == 'md') {
+								text = filename
+							}
+						}
+						let newItem = `[[${text}]]`
+
+						const cursorStart = {
+							line: cursor.line,
+							ch: index
+						}
+						const cursorEnd = {
+							line: cursor.line,
+							ch: indexEnd
+						}
+						editor.replaceRange(newItem, cursorStart, cursorEnd);
+					}
+				}
+			}
+		}
 	}
 }
