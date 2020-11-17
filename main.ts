@@ -1,10 +1,10 @@
-import { strict } from 'assert';
-import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { strict } from 'assert'
+import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian'
 import { MarkdownView, TFile } from 'obsidian'
 
 export default class WikilinksToMdlinks extends Plugin {
 	onload() {
-		console.log('loading wikilinks-to-mdlinks plugin...');
+		console.log('loading wikilinks-to-mdlinks plugin...')
 
 		this.addCommand({
 			id: "toggle-wiki-md-links",
@@ -14,12 +14,12 @@ export default class WikilinksToMdlinks extends Plugin {
 				modifiers: ["Mod", "Shift"],
 				key: "="
 			}]
-		});
+		})
 
 	}
 
 	onunload() {
-		console.log('unloading wikilinks-to-md plugin');
+		console.log('unloading wikilinks-to-md plugin')
 	}
 
 	toggleLink() {
@@ -66,8 +66,8 @@ export default class WikilinksToMdlinks extends Plugin {
 					// Check if it is a markdown file
 					const matches = text.match(regexHasExtension);
 					if (matches) {
-						const filename = matches[1];
-						const extension = matches[2];
+						const filename = matches[1]
+						const extension = matches[2]
 					} else {
 						text = text + ".md"
 					}
@@ -107,8 +107,8 @@ export default class WikilinksToMdlinks extends Plugin {
 						// Check if it is a markdown file
 						const matches = text.match(regexHasExtension);
 						if (matches) {
-							const filename = matches[1];
-							const extension = matches[2];
+							const filename = matches[1]
+							const extension = matches[2]
 
 							if (extension == 'md') {
 								text = filename
