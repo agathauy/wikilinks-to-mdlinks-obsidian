@@ -1,4 +1,6 @@
 # Wikilinks to MDLinks (an Obsidian.md plugin)
+![Github Release Version](https://img.shields.io/github/v/release/agathauy/wikllinks-to-mdlinks-obsidian)
+![Release Downloads](https://img.shields.io/github/downloads/agathauy/wikllinks-to-mdlinks-obsidian/total)
 
 This plugin allows for the conversion of individually selected wikilinks to markdown links, and vice versa.
 
