@@ -4,7 +4,7 @@
 
 This plugin allows for the conversion of individually selected wikilinks to markdown links, and vice versa.
 
-<img src="https://github.com/agathauy/wikilinks-to-mdlinks-obsidian/blob/master/demo.gif" alt="demo" style="zoom:80%;" />
+![demo](https://raw.githubusercontent.com/agathauy/wikilinks-to-mdlinks-obsidian/master/demo.gif)
 
 ### How-to
 
