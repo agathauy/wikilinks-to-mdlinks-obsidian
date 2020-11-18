@@ -4,9 +4,7 @@
 
 This plugin allows for the conversion of individually selected wikilinks to markdown links, and vice versa.
 
-
-
-![Demo of conversion](demo.gif)
+<img src="demo.gif" alt="demo" style="zoom:80%;" />
 
 ### How-to
 
