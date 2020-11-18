@@ -11,12 +11,7 @@ export default class WikilinksToMdlinks extends Plugin {
 			name: "Toggle selected wikilink to markdown link and vice versa",
 			checkCallback: () => {
 				const currentView = this.app.workspace.getActiveLeafOfViewType(MarkdownView)
-				if (currentView == null) {
-					return
-				}
-				const editor = currentView.sourceMode.cmEditor
-
-				if (!(editor.hasFocus)) {
+				if ((currentView == null) || (currentView.getMode() !== 'source'))  {
 					return
 				}
 
@@ -69,14 +64,15 @@ export default class WikilinksToMdlinks extends Plugin {
 					let text = item.match(regexWiki)[1]
 					// Check if it is a markdown file
 					const matches = text.match(regexHasExtension);
+					let newText = text
 					if (matches) {
 						const filename = matches[1]
 						const extension = matches[2]
 					} else {
-						text = text + ".md"
+						newText = newText + ".md"
 					}
-					text = encodeURI(text)
-					let newItem = `[](${text})`
+					const encodedText = encodeURI(newText)
+					let newItem = `[${text}](${encodedText})`
 
 					const cursorStart = {
 						line: cursor.line,
