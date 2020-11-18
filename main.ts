@@ -11,6 +11,9 @@ export default class WikilinksToMdlinks extends Plugin {
 			name: "Toggle selected wikilink to markdown link and vice versa",
 			checkCallback: () => {
 				const currentView = this.app.workspace.getActiveLeafOfViewType(MarkdownView)
+				if (currentView == null) {
+					return
+				}
 				const editor = currentView.sourceMode.cmEditor
 
 				if (!(editor.hasFocus)) {
