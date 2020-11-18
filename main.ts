@@ -23,7 +23,7 @@ export default class WikilinksToMdlinks extends Plugin {
 				return true
 			},
 			hotkeys: [{
-				modifiers: ["Mod", "Shift"],
+				modifiers: ["Mod", "Alt"],
 				key: "="
 			}]
 		})

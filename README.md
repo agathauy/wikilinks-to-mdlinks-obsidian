@@ -9,7 +9,7 @@ This plugin allows for the conversion of individually selected wikilinks to mark
 ### How-to
 
 1. Click your cursor somewhere within the link you want to convert. 
-2. Either use the hotkey `Ctrl/cmd + shift + =` (this can be changed via Hotkeys settings), or press `Ctrl/cmd + p` to open the settings dialog and search for `Wikilinks to MDLinks: Toggle selected wikilink to markdown link and vice versa`. Just typing in a bit of the command, e.g. "toggle" would likely allow this command to show up via the suggestions the search dialog provides.
+2. Either use the hotkey `Ctrl/cmd + alt + =` (this can be changed via Hotkeys settings), or press `Ctrl/cmd + p` to open the settings dialog and search for `Wikilinks to MDLinks: Toggle selected wikilink to markdown link and vice versa`. Just typing in a bit of the command, e.g. "toggle" would likely allow this command to show up via the suggestions the search dialog provides.
 3. The selected link gets toggled to either wikilink format or markdown format, depending on what it was before.
 
 ### Settings
