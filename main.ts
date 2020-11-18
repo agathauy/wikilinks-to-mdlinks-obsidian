@@ -9,7 +9,16 @@ export default class WikilinksToMdlinks extends Plugin {
 		this.addCommand({
 			id: "toggle-wiki-md-links",
 			name: "Toggle selected wikilink to markdown link and vice versa",
-			callback: () => this.toggleLink(),
+			checkCallback: () => {
+				const currentView = this.app.workspace.getActiveLeafOfViewType(MarkdownView)
+				const editor = currentView.sourceMode.cmEditor
+
+				if (!(editor.hasFocus)) {
+					return
+				}
+
+				return this.toggleLink()
+			},
 			hotkeys: [{
 				modifiers: ["Mod", "Shift"],
 				key: "="
@@ -19,16 +28,12 @@ export default class WikilinksToMdlinks extends Plugin {
 	}
 
 	onunload() {
-		console.log('unloading wikilinks-to-md plugin')
+		console.log('unloading wikilinks-to-mdlinks plugin')
 	}
 
 	toggleLink() {
 		const currentView = this.app.workspace.getActiveLeafOfViewType(MarkdownView)
 		const editor = currentView.sourceMode.cmEditor
-
-		if (!(editor.hasFocus)) {
-			return
-		}
 
 		const cursor = editor.getCursor()
 		const line = editor.getDoc().getLine(cursor.line);
