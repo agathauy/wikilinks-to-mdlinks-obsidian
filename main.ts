@@ -9,17 +9,19 @@ export default class WikilinksToMdlinks extends Plugin {
 		this.addCommand({
 			id: "toggle-wiki-md-links",
 			name: "Toggle selected wikilink to markdown link and vice versa",
-			// checkCallback: () => {
-			// Figuring out why checkCallback doesn't allow the setting to appear in Command Palette
-			// 	const currentView = this.app.workspace.getActiveLeafOfViewType(MarkdownView)
+			checkCallback: (checking: boolean) => {
+				const currentView = this.app.workspace.getActiveLeafOfViewType(MarkdownView)
 
-			// 	if ((currentView == null) || (currentView.getMode() !== 'source'))  {
-			// 		return
-			// 	}
+				if ((currentView == null) || (currentView.getMode() !== 'source'))  {
+					return false
+				}
 
-			// 	return this.toggleLink()
-			// },
-			callback: () => this.toggleLink(),
+				if (!checking) {
+					this.toggleLink()
+				}
+
+				return true
+			},
 			hotkeys: [{
 				modifiers: ["Mod", "Shift"],
 				key: "="
@@ -36,9 +38,6 @@ export default class WikilinksToMdlinks extends Plugin {
 		const currentView = this.app.workspace.getActiveLeafOfViewType(MarkdownView)
 		const editor = currentView.sourceMode.cmEditor
 
-		if ((currentView == null) || (currentView.getMode() !== 'source'))  {
-			return
-		}
 
 		const cursor = editor.getCursor()
 		const line = editor.getDoc().getLine(cursor.line);
