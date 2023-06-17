@@ -3,6 +3,11 @@ import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian'
 import { MarkdownView, TFile } from 'obsidian'
 
 export default class WikilinksToMdlinks extends Plugin {
+
+	encodeNonChinese(str: string) {
+        return Array.from(str).map(ch => ch.match(/[\u4e00-\u9fa5]/) ? ch : encodeURIComponent(ch)).join('');
+    }
+
 	onload() {
 		console.log('loading wikilinks-to-mdlinks plugin...')
 
@@ -77,8 +82,8 @@ export default class WikilinksToMdlinks extends Plugin {
 					} else {
 						newText = newText + ".md"
 					}
-					const encodedText = encodeURI(newText)
-					let newItem = `[${text}](${encodedText})`
+					let encodedText = this.encodeNonChinese(newText);
+					let newItem = `[${text}](${encodedText})`;
 
 					const cursorStart = {
 						line: cursor.line,
